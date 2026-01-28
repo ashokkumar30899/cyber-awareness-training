@@ -1,0 +1,31 @@
+body {
+  background: #f4f6f8;
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  margin: 10px 10px 0 0;
+  padding: 10px 16px;
+  border: none;
+  background: #0a66c2;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #084d94;
+}
+
+.nav-buttons {
+  margin-top: 20px;
+}
