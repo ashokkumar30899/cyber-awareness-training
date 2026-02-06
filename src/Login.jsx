@@ -22,7 +22,7 @@ function Login() {
     >
       <div
         style={{
-          backgroundColor: "#84ffff",
+          backgroundColor: "#d8d2d2",
           width: "420px",
           padding: "40px",
           borderRadius: "14px",
@@ -53,7 +53,7 @@ function Login() {
             fontSize: "15px",
             fontWeight: "500",
             backgroundColor: "#000000",
-            border: "1px solid #d1d5db",
+            border: "1px solid #000000",
             borderRadius: "8px",
             cursor: "pointer",
             transition: "all 0.2s ease"
