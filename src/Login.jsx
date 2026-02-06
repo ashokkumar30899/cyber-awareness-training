@@ -13,7 +13,7 @@ function Login() {
       style={{
         height: "100vh",
         width: "100%",
-        background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+        background: "linear-gradient(135deg, #2d7797, #203a43, #2c5364)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -22,7 +22,7 @@ function Login() {
     >
       <div
         style={{
-          backgroundColor: "#d8d2d2",
+          backgroundColor: "#ffffff",
           width: "420px",
           padding: "40px",
           borderRadius: "14px",
