@@ -22,7 +22,7 @@ function Login() {
     >
       <div
         style={{
-          backgroundColor: "#ffffff",
+          backgroundColor: "#84ffff",
           width: "420px",
           padding: "40px",
           borderRadius: "14px",
