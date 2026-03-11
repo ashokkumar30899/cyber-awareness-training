@@ -81,7 +81,10 @@ const AdminDashboard = () => {
       // 3. Process SharePoint Records
       const latestItemsByEmail = {};
       const attemptsCountByEmail = {}; 
-      const passedUsers = new Set();
+      const lastPassDateByEmail = {};
+
+      const SIX_MONTHS_AGOTIME = new Date();
+      SIX_MONTHS_AGOTIME.setMonth(SIX_MONTHS_AGOTIME.getMonth() - 6);
 
       items.forEach(item => {
         const email = item.EmployeeEmail?.toLowerCase();
@@ -91,7 +94,14 @@ const AdminDashboard = () => {
           ? item : latestItemsByEmail[email];
         
         attemptsCountByEmail[email] = (attemptsCountByEmail[email] || 0) + 1;
-        if (item.Result === "PASS") passedUsers.add(email);
+        
+        // Track the most recent PASS date
+        if (item.Result === "PASS") {
+          const passDate = new Date(item.CreatedTime);
+          if (!lastPassDateByEmail[email] || passDate > lastPassDateByEmail[email]) {
+            lastPassDateByEmail[email] = passDate;
+          }
+        }
       });
 
       // 4. Robust Merging Strategy
@@ -100,14 +110,17 @@ const AdminDashboard = () => {
       // Start with SharePoint test-takers (Ground Truth for results)
       Object.keys(latestItemsByEmail).forEach(email => {
         const record = latestItemsByEmail[email];
+        const lastPass = lastPassDateByEmail[email];
+        const isCompliant = lastPass && lastPass > SIX_MONTHS_AGOTIME;
+
         finalMap.set(email, {
           email: email,
           name: record.EmployeeName || email,
           latestResult: record.Result || "N/A",
           lastDate: record.CreatedTime || null,
           attempts: attemptsCountByEmail[email] || 0,
-          hasPassed: passedUsers.has(email),
-          status: record.Result === "PASS" ? "Compliant" : "Overdue"
+          hasPassed: !!lastPass, // still keep track if they EVER passed
+          status: isCompliant ? "Compliant" : (record.Result === "PASS" ? "Compliant" : "Overdue")
         });
       });
 

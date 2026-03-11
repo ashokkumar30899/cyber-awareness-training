@@ -28,6 +28,7 @@ const Sidebar = ({ isOpen, roles }) => {
             <NavLink
               key={item.path}
               to={item.path}
+              end
               style={({ isActive }) => ({
                 ...styles.navLink,
                 backgroundColor: isActive ? "var(--accent-color)" : "transparent",
@@ -48,6 +49,7 @@ const Sidebar = ({ isOpen, roles }) => {
               <NavLink
                 key={item.path}
                 to={item.path}
+                end
                 style={({ isActive }) => ({
                   ...styles.navLink,
                   backgroundColor: isActive ? "var(--accent-color)" : "transparent",
