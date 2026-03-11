@@ -113,14 +113,19 @@ const AdminDashboard = () => {
         const lastPass = lastPassDateByEmail[email];
         const isCompliant = lastPass && lastPass > SIX_MONTHS_AGOTIME;
 
+        // PRIORITIZE PASS: If compliant via a prior PASS, show that PASS info.
+        // Otherwise show the actual latest attempt results.
+        const displayResult = isCompliant ? "PASS" : record.Result || "N/A";
+        const displayDate = isCompliant ? lastPass.toISOString() : record.CreatedTime || null;
+
         finalMap.set(email, {
           email: email,
           name: record.EmployeeName || email,
-          latestResult: record.Result || "N/A",
-          lastDate: record.CreatedTime || null,
+          latestResult: displayResult,
+          lastDate: displayDate,
           attempts: attemptsCountByEmail[email] || 0,
-          hasPassed: !!lastPass, // still keep track if they EVER passed
-          status: isCompliant ? "Compliant" : (record.Result === "PASS" ? "Compliant" : "Overdue")
+          hasPassed: !!lastPass,
+          status: isCompliant ? "Compliant" : "Overdue"
         });
       });
 
@@ -180,7 +185,7 @@ const AdminDashboard = () => {
   };
 
   const exportToCSV = () => {
-    const headers = ["Employee Name", "Email", "Latest Result", "Last Attempt Date", "Total Attempts", "Status"];
+    const headers = ["Employee Name", "Email", "Assessment Result", "Result Date", "Total Attempts", "Status"];
     const rows = userList.map(u => [
       u.name,
       u.email,
@@ -282,8 +287,8 @@ const AdminDashboard = () => {
             <thead>
               <tr style={styles.tableHeader}>
                 <th style={styles.th}>Employee</th>
-                <th style={styles.th}>Latest Result</th>
-                <th style={styles.th}>Last Date (IST)</th>
+                <th style={styles.th}>Assessment Result</th>
+                <th style={styles.th}>Result Date (IST)</th>
                 <th style={styles.th}>Attempts</th>
                 <th style={styles.th}>Status</th>
               </tr>
